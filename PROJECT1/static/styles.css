@@ -1,0 +1,61 @@
+/* 設置全局樣式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 對話框容器 */
+.chat-container {
+    width: 600px; /* 設置寬度 */
+    height: 450px; /* 高度 = 寬度 * (3/4) */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 對話框 */
+.chat-box {
+    flex: 1; /* 佔據剩餘空間 */
+    padding: 15px;
+    overflow-y: auto; /* 允許滾動 */
+    border-bottom: 1px solid #ddd;
+}
+
+/* 輸入框容器 */
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+}
+
+/* 輸入框 */
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* 發送按鈕 */
+#send-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send-btn:hover {
+    background-color: #0056b3;
+}

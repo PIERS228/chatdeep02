@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿尔弗雷德·阿德勒</title>
+    <style>
+        /* 設置全局樣式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 設置背景圖片 */
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover; /* 讓圖片覆蓋整個背景 */
+            background-position: center; /* 讓圖片居中 */
+            background-repeat: no-repeat; /* 防止圖片重複 */
+        }
+
+        /* 聊天界面容器 */
+        .chat-container {
+            width: 450px; /* 設置寬度為300px */
+            height: 600px; /* 根據3:4的比例，設置高度為400px */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 聊天記錄區域 */
+        #chat-log {
+            flex: 1; /* 讓聊天記錄區域佔據剩餘空間 */
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        /* 輸入框和按鈕 */
+        #user-input {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #send-button {
+            width: 80px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>與阿尔弗雷德·阿德勒對話</h1>
+        <div id="chat-log"></div>
+        <input type="text" id="user-input" placeholder="輸入你的問題...">
+        <button id="send-button">發送</button>
+    </div>
+
+    <script>
+        // JavaScript 代碼，用於與後端 API 交互
+        document.getElementById('send-button').addEventListener('click', async () => {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput) return;
+
+            // 顯示用戶輸入
+            const chatLog = document.getElementById('chat-log');
+            chatLog.innerHTML += `<div><strong>你:</strong> ${userInput}</div>`;
+
+            // 清空輸入框
+            document.getElementById('user-input').value = '';
+
+            // 發送請求到後端
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userInput }),
+                });
+
+                const data = await response.json();
+                if (data.message) {
+                    chatLog.innerHTML += `<div><strong>阿尔弗雷德·阿德勒:</strong> ${data.message}</div>`;
+                } else {
+                    chatLog.innerHTML += `<div><strong>錯誤:</strong> 無法獲取回應</div>`;
+                }
+            } catch (error) {
+                chatLog.innerHTML += `<div><strong>錯誤:</strong> 網絡請求失敗</div>`;
+            }
+
+            // 滾動到聊天記錄底部
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+    </script>
+</body>
+</html>
