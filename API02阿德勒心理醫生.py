@@ -146,5 +146,4 @@ def chat():
 
 
 if __name__ == '__main__':
-    # 運行 Flask 應用
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
